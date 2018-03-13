@@ -39,6 +39,7 @@
             this.AboutButton = new System.Windows.Forms.Button();
             this.BenderBox = new System.Windows.Forms.PictureBox();
             this.FryBox = new System.Windows.Forms.PictureBox();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.BenderBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FryBox)).BeginInit();
             this.SuspendLayout();
@@ -157,6 +158,11 @@
             this.FryBox.TabIndex = 8;
             this.FryBox.TabStop = false;
             // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.DefaultExt = "txt";
+            this.saveFileDialog.Filter = "Text Files (*.txt)|*.txt";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -200,6 +206,7 @@
         private System.Windows.Forms.Button AboutButton;
         private System.Windows.Forms.PictureBox BenderBox;
         private System.Windows.Forms.PictureBox FryBox;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
 

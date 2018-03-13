@@ -15,7 +15,7 @@ namespace PlugNChug
     public partial class MainForm : Form
     {
 
-        public static string SoftwareNameString = "Plug N Chug (v1.00)";
+        public static string SoftwareNameString = "Plug N Chug (v1.01)";
         public SoundPlayer snd = new SoundPlayer(Properties.Resources.getlucky);
         public string LineCountString = "";
 
@@ -38,17 +38,26 @@ namespace PlugNChug
 
             //BenderBox.Image = null;
             //FryBox.Image = null;
-            VarBox.Enabled = false;
-            CodeBox.Enabled = false;
-            StartButton.Enabled = false;
 
-            BgWorkerInformation BgInfo = new BgWorkerInformation();
+            saveFileDialog.FileName = System.DateTime.Now.ToString("yyyy-MM-dd") + " - PlugNChug.txt";
 
-            BgInfo.VarText = VarBox.Text;
-            BgInfo.CodeText = CodeBox.Text;
+            if (saveFileDialog.ShowDialog() != DialogResult.Cancel) { 
 
-            BGWorker.RunWorkerAsync(BgInfo);
-            
+                    VarBox.Enabled = false;
+                    CodeBox.Enabled = false;
+                    StartButton.Enabled = false;
+
+                    BgWorkerInformation BgInfo = new BgWorkerInformation();
+
+                    BgInfo.VarText = VarBox.Text;
+                    BgInfo.CodeText = CodeBox.Text;
+                    BgInfo.FileOutputLocation = saveFileDialog.FileName;
+
+                    BGWorker.RunWorkerAsync(BgInfo);
+            }
+
+
+
         }
 
 
@@ -91,7 +100,7 @@ namespace PlugNChug
                     List<string> RecursedVars = Recursion(0, VarList).Distinct().ToList();
 
 
-                    using (StreamWriter outputFile = new StreamWriter(new FileStream("PlugNChug_Code.txt", FileMode.Create, FileAccess.Write), Encoding.UTF8))
+                    using (StreamWriter outputFile = new StreamWriter(new FileStream(BgData.FileOutputLocation, FileMode.Create, FileAccess.Write), Encoding.UTF8))
                     {
 
                     outputFile.WriteLine("Input Variable Data:");
@@ -130,14 +139,19 @@ namespace PlugNChug
 
 
                 }
-                
+
+
+                e.Result = BgData.FileOutputLocation;
 
             }
             catch
             {
                 MessageBox.Show("An error occurred while building your code.", "Ruh-roh!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Result = null;
             }
 
+
+            
 
 
         }
@@ -148,7 +162,8 @@ namespace PlugNChug
         {
             public string VarText { get; set; }
             public string CodeText { get; set; }
-            
+            public string FileOutputLocation { get; set; }
+
         }
 
         
@@ -185,19 +200,24 @@ namespace PlugNChug
         private void BGWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             StatusLabel.Text = "Finished!   :)";
-            DialogResult dialogResult = MessageBox.Show("Your code has been assembled!\r\n\r\nWould you like to open the output file?", "Finished!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-            if (dialogResult == DialogResult.Yes)
-                {
-                try
-                {
-                    System.Diagnostics.Process.Start("explorer.exe", "PlugNChug_Code.txt");
+
+            if (e.Result != null) { 
+                DialogResult dialogResult = MessageBox.Show("Your code has been assembled!\r\n\r\nWould you like to open the output file?", "Finished!", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                if (dialogResult == DialogResult.Yes)
+                    {
+                    try
+                    {
+                        System.Diagnostics.Process.Start("explorer.exe", e.Result.ToString());
+                    }
+                    catch
+                    {
+                        MessageBox.Show("There was a problem when trying to open your output file.", "Ruh-roh!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                catch
-                {
-                    MessageBox.Show("There was a problem when trying to open your output file.", "Ruh-roh!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+
             }
-                
+
 
             CodeBox.Enabled = true;
             VarBox.Enabled = true;

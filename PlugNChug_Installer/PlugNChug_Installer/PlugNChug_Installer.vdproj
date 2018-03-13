@@ -49,6 +49,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -212,15 +220,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Plug N Chug"
-        "ProductCode" = "8:{2641CC23-4E12-46DF-90C7-8405E7D5D76E}"
-        "PackageCode" = "8:{48425673-4E83-4299-B84F-EC16A62BF1FE}"
+        "ProductCode" = "8:{56060CA6-4676-40BC-A8AB-7649F79CA1FB}"
+        "PackageCode" = "8:{ADF8DB71-6394-4C1A-8399-D4E8612F4D2E}"
         "UpgradeCode" = "8:{50536FA3-B435-4DAE-A4C6-C3BAACCCB3A2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.00"
+        "ProductVersion" = "8:1.01"
         "Manufacturer" = "8:Ryan L. Boyd, Ph.D."
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
